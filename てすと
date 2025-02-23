@@ -17,26 +17,5 @@
             G -- No --> E
             E -- No --> N("End")
         end
-    
-        subgraph FindFile
-            O --> P("Declare variables")
-            P --> Q("Initialize ws, ws2")
-            Q --> R("Get lastRow from Sheet1")
-            R --> S("Get path from Sheet2")
-            S --> T("Clear Sheet1 Column C")
-            T --> U("Initialize fso")
-            U --> V("fso.FolderExists(path)")
-            V -- No --> W("Exit Sub")
-            V -- Yes --> X("r = 2 to lastRow")
-            X -- Yes --> Y("Get keyWord from Sheet1")
-            Y --> Z("For Each objfile In objfolder.Files")
-            Z -- Yes --> AA("objfile.Name Like "*" & keyWord & '*'")
-            AA -- Yes --> AB("Write path to Sheet1 Column C")
-            AB --> Z
-            AA -- No --> Z
-            Z -- No --> X
-            X -- No --> AC("Release fso")
-            AC --> AD("End")
-        end
 
 ```
