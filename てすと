@@ -1,3 +1,4 @@
+```mermaid
 graph TD
     subgraph CreateEmail
         A[Start] --> B(Declare variables)
@@ -37,3 +38,5 @@ graph TD
         X -- No --> AC(Release fso)
         AC --> AD(End)
     end
+
+```
