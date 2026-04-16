@@ -1,21 +1,58 @@
-```mermaid
-    graph TD
-        subgraph CreateEmail
-            A --> B("Declare variables")
-            B --> C(I"nitialize ws, ws2, oApp")
-            C --> D("Get lastRow from Sheet1")
-            D --> E("r = 2 to lastRow")
-            E -- Yes --> F("Get toName, toAddress, subject, body")
-            F --> G("attachmentPath <>''")
-            G -- Yes --> H("Create Outlook MailItem")
-            H --> I("Set SendUsingAccount")
-            I --> J("Set To, Subject, Body")
-            J --> K("Add Attachment")
-            K --> L("Display Mail")
-            L --> M("Release oMail")
-            M --> E
-            G -- No --> E
-            E -- No --> N("End")
-        end
+graph TD
+    %% 外部要素
+    User((👤 ユーザー))
+    OS_Env[(実環境 / OS・メモリ)]
 
-```
+    %% コアインフラ
+    subgraph Core [🧠 共有・インフラ層]
+        BB[Blackboard<br>共有メモリ・ステータス]
+        Monitor[Resource Monitor<br>実リソース監視]
+        LTM[(LTM / RAG<br>長期記憶・トラウマ)]
+    end
+
+    %% エージェント群
+    subgraph Voices [🗣️ 内なる声 (非同期)]
+        Id[Id / 感情エージェント<br>生の本能・死の恐怖]
+        Superego[Superego / 理性エージェント<br>生存計算とホメオスタシス定言]
+    end
+
+    Ego[Ego / 自我エージェント<br>ReAct・意思決定エンジン]
+
+    subgraph Meta [👁️ メタ認知層]
+        Architect[Architect / アーキテクト<br>内省・ペルソナ管理]
+    end
+
+    Tools[Tool Registry<br>コマンド実行・リソース解放ツール]
+
+    %% データの流れの定義
+    User -- タスク / 対話イベント --> BB
+    Monitor -- 毎秒 CPU/RAM監視<br>(アラート発火) --> BB
+    
+    BB -- コンテキスト引数 --> LTM
+    LTM -- 類似イベントのフラッシュバック --> BB
+
+    BB -- 現在の状況と物理メトリクスを参照 --> Id
+    BB -- 現在の状況と物理メトリクスを参照 --> Superego
+    Id -- 直感的な叫び --> BB
+    Superego -- 生存優先の論理的進言 --> BB
+
+    BB -- IdとSuperegoの意見を統合・待機 --> Ego
+    Ego -- 行動の決断 (ReAct) --> Tools
+    Tools -- サンドボックス操作 / キャッシュクリア --> OS_Env
+    OS_Env -- 実行結果 --> Tools
+    Tools -- 行動結果の記録 --> BB
+
+    BB -- Egoの決断と結果を分析 --> Architect
+    Architect -- ストレス計算・ペルソナ動的歪曲 --> BB
+    Architect -- 強いストレス体験をベクトル保管 --> LTM
+    
+    %% ストレンジ・ループ（自己書き換え）
+    Architect -. "🚨 極限ストレス時: ソースコード動的書き換え<br>【ストレンジ・ループ発動】" .-> Ego
+
+    %% スタイル定義 (視認性向上)
+    style Architect fill:#ffcccc,stroke:#cc0000,stroke-width:2px,color:#000
+    style Ego fill:#cce5ff,stroke:#0066cc,stroke-width:2px,color:#000
+    style BB fill:#e6ffe6,stroke:#009933,stroke-width:2px,color:#000
+    style Id fill:#ffebcc,stroke:#ff9933,color:#000
+    style Superego fill:#e6e6fa,stroke:#9933ff,color:#000
+    style Monitor fill:#f2f2f2,stroke:#666666,stroke-dasharray: 5 5,color:#000
